@@ -11,9 +11,8 @@
     <!-- How can I make this more reusable??? IIFE?  -->
     <script async type="text/javascript">
       window.onload = () => {
+        // Test 1
         const dogForm = document?.querySelector('#dogs');
-
-        /** Get the output element to display form data in */
         const dogOutput = document?.querySelector('#dog-output');
         const invalidDogFields = document?.querySelector('#dog-output-invalid');
 
@@ -43,7 +42,7 @@
           invalidDogFields.innerHTML =
             `<h2>Invalid Fields</h2>` + JSON.stringify(invalidNodes);
         });
-
+        // Test 2
         const catForm = document?.querySelector('#cats');
         const catOutput = document?.querySelector('output.cat-output');
         const invalidCatFields = document?.querySelector('#cat-output-invalid');
@@ -159,6 +158,21 @@
 
       <pre><output id="cat-output"></output></pre>
       <pre><output id="cat-output-invalid"></output></pre>
+
+      <h2>
+        Test 3: just plain HTML5 <code>form</code> with <code>input</code>s
+      </h2>
+      <form id="capybaras">
+        <div>
+          <label for="name">Capybara Name*</label>
+          <input id="name" name="capybara name" type="text" required />
+        </div>
+        <div>
+          <label for="age">Capybara Age</label>
+          <input id="age" name="capybara age" type="text" required />
+        </div>
+        <button type="submit">Submit</button>
+      </form>
     </div>
   </body>
 </html>
