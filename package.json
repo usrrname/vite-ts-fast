@@ -1,0 +1,22 @@
+{
+  "name": "fast-vite-demo",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "serve": "npm run build && npm run dev",
+    "preview": "vite preview --port 8080"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.3",
+    "vite": "^4.0.0"
+  },
+  "dependencies": {
+    "@microsoft/fast-element": "2.0.0-beta.18",
+    "@microsoft/fast-foundation": "3.0.0-alpha.22",
+    "@microsoft/fast-react-wrapper": "1.0.0-alpha.7"
+  }
+}

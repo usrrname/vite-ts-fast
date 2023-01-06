@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS + Fast</title>
+    <script type="module" defer src="./dist/fast-vite-demo.js"></script>
+    <link rel="stylesheet" href="./src/style.css" />
+
+    <!-- How can I make this more reusable??? IIFE?  -->
+    <script async type="text/javascript">
+      window.onload = () => {
+        const dogForm = document?.querySelector('#dogs');
+
+        /** Get the output element to display form data in */
+        const dogOutput = document?.querySelector('#dog-output');
+        const invalidDogFields = document?.querySelector('#dog-output-invalid');
+
+        dogForm?.addEventListener('submit', (event) => {
+          event.preventDefault();
+
+          let shadowDOMinputs = {};
+          let invalidNodes = {};
+
+          for (let i of dogForm.children) {
+            if (i.nodeName === 'CUSTOM-TEXT-FIELD') {
+              shadowDOMinputs[i.id] = i.value;
+              const validationMessage = i.shadowRoot.querySelector(
+                `input#${i.id}`
+              ).validationMessage;
+
+              if (validationMessage.length > 1) {
+                i.shadowRoot.querySelector(`input#${i.id}`).invalid = true;
+                invalidNodes[i.id] = validationMessage;
+              }
+            }
+          }
+
+          dogOutput.innerHTML =
+            `<h2>Submitted form data</h2>` + JSON.stringify(shadowDOMinputs);
+
+          invalidDogFields.innerHTML =
+            `<h2>Invalid Fields</h2>` + JSON.stringify(invalidNodes);
+        });
+
+        const catForm = document?.querySelector('#cats');
+        const catOutput = document?.querySelector('output.cat-output');
+        const invalidCatFields = document?.querySelector('#cat-output-invalid');
+
+        catForm?.addEventListener('submit', (event) => {
+          event.preventDefault();
+
+          let data = {};
+          let invalidNodes = {};
+
+          for (let i of catForm.children) {
+            if (i.nodeName === 'CUSTOM-TEXT-FIELD') {
+              data[i.id] = i.value;
+              const validationMessage = i.shadowRoot.querySelector(
+                `input#${i.id}`
+              ).validationMessage;
+              if (validationMessage.length > 1)
+                invalidNodes[i.id] = validationMessage;
+            }
+          }
+
+          catOutput.innerHTML =
+            `<h2>Submitted form data</h2>` + JSON.stringify(data);
+
+          invalidCatFields.innerHTML =
+            `<h2>Invalid Fields</h2>` + JSON.stringify(invalidNodes);
+        });
+      };
+    </script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Form-associated custom elements</h1>
+    </header>
+    <div id="app">
+      <h2>Test 1: wrapping with <code>form</code> tag</h2>
+
+      <form
+        id="dogs"
+        name="form"
+        class="form-example"
+        method="post"
+        enctype="multipart/form-data"
+        onsubmit=""
+      >
+        <custom-text-field
+          id="dog-name"
+          label="Dog Name"
+          name="dog name"
+          helptext="Enter your dog's name"
+          optionality="(Totally Required)"
+          required
+          invalid="false"
+        >
+        </custom-text-field>
+        <br />
+        <custom-text-field
+          id="dog-age"
+          label="Age*"
+          helptext="How old is your dog?"
+          optionality="(Required af)"
+          name="dog age"
+          inputmode="numeric"
+          required
+        >
+        </custom-text-field>
+
+        <fast-button
+          appearance="primary"
+          form="dogs"
+          formtarget="_self"
+          type="submit"
+          >Submit</fast-button
+        >
+      </form>
+
+      <pre><output id="dog-output"></output></pre>
+
+      <pre><output id="dog-output-invalid"></output></pre>
+
+      <h2>Test 2: wrapping with <code>fast-form</code> tag</h2>
+      <pre>nothing shows up :(</pre>
+
+      <fast-form id="cats" name="form" method="post" method="post">
+        <custom-text-field
+          id="cat-name"
+          label="Cat Name*"
+          name="cat name"
+          helptext="Enter your cat's name"
+          optionality="(Required)"
+          required
+        >
+        </custom-text-field>
+
+        <custom-text-field
+          id="cat-age"
+          label="Label Text*"
+          helptext="How old is your cat?"
+          optionality="Optional"
+          name="cat age"
+        >
+        </custom-text-field>
+
+        <fast-button
+          appearance="primary"
+          form="cats"
+          formtarget="_self"
+          type="submit"
+          >Submit</fast-button
+        >
+      </fast-form>
+
+      <pre><output id="cat-output"></output></pre>
+      <pre><output id="cat-output-invalid"></output></pre>
+    </div>
+  </body>
+</html>

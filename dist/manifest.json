@@ -1,0 +1,7 @@
+{
+  "src/components/index.ts": {
+    "file": "fast-vite-demo.cjs",
+    "src": "src/components/index.ts",
+    "isEntry": true
+  }
+}
