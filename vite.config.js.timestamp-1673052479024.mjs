@@ -1,0 +1,19 @@
+// vite.config.js
+import { defineConfig } from "file:///home/projects/vitejs-vite-ef5nob/node_modules/vite/dist/node/index.js";
+var vite_config_default = defineConfig({
+  build: {
+    lib: {
+      name: "fast-vite",
+      entry: "src/components/index.ts",
+      formats: ["es", "umd", "cjs"]
+    },
+    manifest: true,
+    rollupOptions: {
+      external: /^@microsoft\/fast-(element|components)/
+    }
+  }
+});
+export {
+  vite_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcuanMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImNvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9kaXJuYW1lID0gXCIvaG9tZS9wcm9qZWN0cy92aXRlanMtdml0ZS1lZjVub2JcIjtjb25zdCBfX3ZpdGVfaW5qZWN0ZWRfb3JpZ2luYWxfZmlsZW5hbWUgPSBcIi9ob21lL3Byb2plY3RzL3ZpdGVqcy12aXRlLWVmNW5vYi92aXRlLmNvbmZpZy5qc1wiO2NvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9pbXBvcnRfbWV0YV91cmwgPSBcImZpbGU6Ly8vaG9tZS9wcm9qZWN0cy92aXRlanMtdml0ZS1lZjVub2Ivdml0ZS5jb25maWcuanNcIjtpbXBvcnQgeyBkZWZpbmVDb25maWcgfSBmcm9tICd2aXRlJ1xuXG4vLyBodHRwczovL3ZpdGVqcy5kZXYvY29uZmlnL1xuZXhwb3J0IGRlZmF1bHQgZGVmaW5lQ29uZmlnKHtcbiAgYnVpbGQ6IHtcbiAgICBsaWI6IHtcbiAgICAgIG5hbWU6ICdmYXN0LXZpdGUnLFxuICAgICAgZW50cnk6ICdzcmMvY29tcG9uZW50cy9pbmRleC50cycsXG4gICAgICBmb3JtYXRzOiBbJ2VzJywgJ3VtZCcsICdjanMnXVxuICAgIH0sXG4gICAgbWFuaWZlc3Q6IHRydWUsXG4gICAgcm9sbHVwT3B0aW9uczoge1xuICAgICAgZXh0ZXJuYWw6IC9eQG1pY3Jvc29mdFxcL2Zhc3QtKGVsZW1lbnR8Y29tcG9uZW50cykvXG4gICAgfVxuICB9XG59KSJdLAogICJtYXBwaW5ncyI6ICI7QUFBcVIsU0FBUyxvQkFBb0I7QUFHbFQsSUFBTyxzQkFBUSxhQUFhO0FBQUEsRUFDMUIsT0FBTztBQUFBLElBQ0wsS0FBSztBQUFBLE1BQ0gsTUFBTTtBQUFBLE1BQ04sT0FBTztBQUFBLE1BQ1AsU0FBUyxDQUFDLE1BQU0sT0FBTyxLQUFLO0FBQUEsSUFDOUI7QUFBQSxJQUNBLFVBQVU7QUFBQSxJQUNWLGVBQWU7QUFBQSxNQUNiLFVBQVU7QUFBQSxJQUNaO0FBQUEsRUFDRjtBQUNGLENBQUM7IiwKICAibmFtZXMiOiBbXQp9Cg==

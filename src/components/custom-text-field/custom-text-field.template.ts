@@ -10,7 +10,8 @@ export function textTemplate(
   options: TextFieldOptions = {}
 ): ElementViewTemplate {
   return html<CustomTextField>`
-<template>
+<template invalid="${(x) => x.invalid}" 
+validationMessage="${(x) => x.validationMessage}">
   ${when(
     (x) => x.label,
     html`<label part="label" for="${(x) => x.id}" class="${(x) =>
@@ -75,7 +76,8 @@ export function textTemplate(
         ${ref('control')} 
         ?form="${(x) => x.parentForm}" 
         @reset="${(x) => x.resetValue}"
-        validationMessage="${(x) => x.validationMessage}"/>
+        @validate="${(x) => x.validate}"
+        />
         
       ${endSlotTemplate(options)}
     </div>

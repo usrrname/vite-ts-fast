@@ -1,13 +1,15 @@
 import { ViewTemplate } from '@microsoft/fast-element';
-import { html } from '@microsoft/fast-element';
-import { ProxyElement } from '@microsoft/fast-foundation';
+import { html, ref, slotted } from '@microsoft/fast-element';
 import { FastForm } from './form.js';
 
-export const formTemplate: ViewTemplate<FastForm & ProxyElement[]> = html`
-<template>
-  <form id="${x => x.id}" action="${x => x.action}" elements="${x => x.elements}">
-  </form>
-</template>`;
+export const formTemplate: ViewTemplate<FastForm> = html`
+  <form id="${(x) => x.id}" 
+  method="${(x) => x.method}" 
+  ${ref('formData')} role="form">
+ 
+  <slot ${slotted('elements')}></slot>
+
+  </form>`;
 
 export default FastForm.define({
   name: 'fast-form',

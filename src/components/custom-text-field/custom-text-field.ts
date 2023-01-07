@@ -33,7 +33,7 @@ export class CustomTextField extends FASTTextField {
    */
   @attr({ attribute: 'invalid', mode: 'boolean' })
   @observable
-  public invalid: ValidityState['valid'] | undefined;
+  public invalid?: boolean;
   /**
    * @public
    * @remarks
@@ -41,7 +41,7 @@ export class CustomTextField extends FASTTextField {
    */
   @attr({ attribute: 'validationmessage' })
   @observable
-  public validationMessage: string = this.elementInternals!.validationMessage;
+  public validationMessage: string = this.control.validationMessage;
   /**
    * @public
    * @remarks
@@ -95,10 +95,7 @@ export class CustomTextField extends FASTTextField {
   }
 
   @volatile isInvalid(): void {
-    this.invalid = this.elementInternals?.validity.valid;
-    this.invalid
-      ? this.setAttribute('invalid', 'true')
-      : this.removeAttribute('invalid');
+    this.invalid = this.control.validity.valid === false ? true : false;
     this.$emit('invalid', this.invalid);
   }
 
@@ -127,12 +124,13 @@ export class CustomTextField extends FASTTextField {
   validate(): void {
     this.$emit(
       'validate',
-      this.setValidity(this.validity, this.elementInternals?.validationMessage)
+      this.setValidity(this.validity, this.validationMessage)
     );
   }
 
   resetValue(): void {
+    super.formResetCallback();
+    this.value = '';
     this.$emit('reset', '');
-    this.updateValue('');
   }
 }

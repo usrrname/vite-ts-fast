@@ -42,6 +42,11 @@
           invalidDogFields.innerHTML =
             `<h2>Invalid Fields</h2>` + JSON.stringify(invalidNodes);
         });
+
+        dogForm?.addEventListener('reset', (event) => {
+          event.preventDefault();
+          console.log(`Reset event at: ${event.timestamp}`);
+        });
         // Test 2
         const catForm = document?.querySelector('#cats');
         const catOutput = document?.querySelector('output.cat-output');
@@ -55,11 +60,10 @@
 
           for (let i of catForm.children) {
             if (i.nodeName === 'CUSTOM-TEXT-FIELD') {
-              data[i.id] = i.value;
               const validationMessage = i.shadowRoot.querySelector(
                 `input#${i.id}`
               ).validationMessage;
-              if (validationMessage.length > 1)
+              if (validationMessage.length > 1 || i.invalid)
                 invalidNodes[i.id] = validationMessage;
             }
           }
@@ -91,7 +95,7 @@
       >
         <custom-text-field
           id="dog-name"
-          label="Dog Name"
+          label="Dog Name*"
           name="dog name"
           helptext="Enter your dog's name"
           optionality="(Totally Required)"
@@ -110,7 +114,7 @@
           required
         >
         </custom-text-field>
-
+        <br />
         <fast-button
           appearance="primary"
           form="dogs"
@@ -118,10 +122,16 @@
           type="submit"
           >Submit</fast-button
         >
+        <fast-button
+          appearance="primary"
+          form="dogs"
+          formtarget="_self"
+          type="reset"
+          >Reset</fast-button
+        >
       </form>
 
       <pre><output id="dog-output"></output></pre>
-
       <pre><output id="dog-output-invalid"></output></pre>
 
       <h2>Test 2: wrapping with <code>fast-form</code> tag</h2>
