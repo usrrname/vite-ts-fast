@@ -5,14 +5,8 @@ import {
 } from '@microsoft/fast-foundation';
 
 export class CustomTextField extends FASTTextField {
-  static control: HTMLInputElement;
-  _handleFormData: any;
-
   public supportsElementInternals: boolean = true;
-  constructor() {
-    super();
-    this._handleFormData = this.handleFormData.bind(this);
-  }
+
   /**
    * @public
    * @remarks
@@ -33,7 +27,7 @@ export class CustomTextField extends FASTTextField {
    */
   @attr({ attribute: 'invalid', mode: 'boolean' })
   @observable
-  public invalid?: boolean;
+  public invalid: boolean = false;
   /**
    * @public
    * @remarks
@@ -86,35 +80,29 @@ export class CustomTextField extends FASTTextField {
     this.setFormValue(value);
   }
 
-  handleFormData({ formData }) {
-    // add our name and value to the form's submission data if we're not disabled
-    // https://developer.mozilla.org/en-US/docs/Web/API/FormData
-    if (!this.disabled) {
-      formData.append(this.name, this.value);
-    }
-  }
-
   @volatile isInvalid(): void {
     this.invalid = this.control.validity.valid === false ? true : false;
     this.$emit('invalid', this.invalid);
   }
 
   // sync observed attributes to <input>
-  // attributeChangedCallback(name, oldValue, newValue) {
-  //   console.info(
-  //     `name:`,
-  //     name,
-  //     ` oldValue:${oldValue}`,
-  //     ` newValue:`,
-  //     newValue
-  //   );
-  //   const value =
-  //     name === 'disabled' ? this.hasAttribute('disabled') : newValue;
-  //   name === 'invalid' && newValue === true
-  //     ? this.setAttribute('invalid', 'true')
-  //     : this.removeAttribute('invalid');
-  //   this[`${name}`] = value;
-  // }
+  attributeChangedCallback(name, _, newValue) {
+    // console.info(
+    //   `name:`,
+    //   name,
+    //   ` oldValue:${oldValue}`,
+    //   ` newValue:`,
+    //   newValue
+    // );
+
+    // WHY YOU NO SET ATTRIBUTE?!
+    const value =
+      name === 'disabled' ? this.hasAttribute('disabled') : newValue;
+    name === 'invalid' && newValue === true
+      ? this.setAttribute('invalid', 'true')
+      : this.removeAttribute('invalid');
+    this[`${name}`] = value;
+  }
 
   /**
    * {@function}
@@ -122,13 +110,11 @@ export class CustomTextField extends FASTTextField {
    * sets the validity of the field
    */
   validate(): void {
-    this.$emit(
-      'validate',
-      this.setValidity(this.validity, this.validationMessage)
-    );
+    super.validate();
+    this.$emit('validate', this.control.validity);
   }
 
-  resetValue(): void {
+  reset(): void {
     super.formResetCallback();
     this.value = '';
     this.$emit('reset', '');
