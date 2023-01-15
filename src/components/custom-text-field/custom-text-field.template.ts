@@ -4,14 +4,16 @@ import {
   startSlotTemplate,
   TextFieldOptions,
 } from '@microsoft/fast-foundation';
+import { errTemplate } from '../error/error-message.js';
 import type { CustomTextField } from './custom-text-field.js';
 
 export function textTemplate(
   options: TextFieldOptions = {}
 ): ElementViewTemplate {
   return html<CustomTextField>`
-<template invalid="${(x) => x.isInvalid}" 
-validationMessage="${(x) =>
+<template 
+invalid="${(x) => x.isInvalid}" 
+:validationMessage="${(x) =>
     x.validationMessage ?? x.control.validationMessage}">
   ${when(
     (x) => x.label,
@@ -84,8 +86,7 @@ validationMessage="${(x) =>
   </div>
   ${when(
     (x) => x.invalid,
-    html`<error-message type="error" textcontent="${(x) =>
-      x.validationMessage}"></error-message>`
+    html`${errTemplate('error', (x) => x.validationMessage)}`
   )}
 </template>`;
 }
